@@ -25,6 +25,8 @@
 
 * public String toString()
 
+* private boolean isGparent(Node n)
+
 * driver to test all three methods (Build a RBTree by hand and then check if it's legit)
 
 

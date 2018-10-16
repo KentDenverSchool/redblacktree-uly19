@@ -9,7 +9,7 @@ class Node:
         self.black = False
 
     def __repr__(self):
-        return "Node{ key : " + str(self.key) + ", value : " + str(self.value) + ", black : " + str(self.Black) + + "}"
+        return "Node{ key : " + str(self.key) + ", value : " + str(self.value) + ", black : " + str(self.black) + "}"
 
     def getKey(self):
         return self.key
@@ -44,22 +44,21 @@ class Node:
 
 class Red_Black_Tree:
     def __init__(self):
-        self.size = 0
         self.root = Node(None, None)
-    def rotateRight(nodeIn):
+    def rotateRight(self, nodeIn):
         if nodeIn.getLeft() == None:
             return None
         else:
             nodeOut = nodeIn.getLeft()
-            nodeIn.setLeft(newNode.getRight())
+            nodeIn.setLeft(nodeOut.getRight())
             nodeOut.setRight(nodeIn)
             return nodeOut
-    def rotateLeft(nodeIn):
+    def rotateLeft(self, nodeIn):
         if nodeIn.getRight() == None:
             return None
         else:
             nodeOut = nodeIn.getRight()
-            nodeIn.setRight(newNode.getLeft())
+            nodeIn.setRight(nodeOut.getLeft())
             nodeOut.setLeft(nodeIn)
             return nodeOut
     def isGParrent(self, nodeIn):
@@ -141,7 +140,7 @@ class Red_Black_Tree:
             nodeIn.setRight(self.__remove(nodeIn.getRight(), keyIn))
         else:
             if nodeIn.getRight() == None:
-                return nodeIn.getLeft();
+                return nodeIn.getLeft()
             if nodeIn.getLeft() == None:
                 return nodeIn.getRight()
             min = self.__min(nodeIn.getRight())
@@ -150,7 +149,7 @@ class Red_Black_Tree:
         return nodeIn
 
     def min(self):
-        return self.__min(self.root).getKey();
+        return self.__min(self.root).getKey()
 
     def __min(self, nodeIn):
         if nodeIn.getLeft() == None:
@@ -159,7 +158,7 @@ class Red_Black_Tree:
             return self.__min(nodeIn.getLeft())
 
     def max(self):
-        return self.__max(self.root).getKey();
+        return self.__max(self.root).getKey()
 
     def __max(self, nodeIn):
         if nodeIn.getRight() == None:
@@ -186,8 +185,6 @@ class Red_Black_Tree:
                 blackNum = blacNum + 1
         return blackNum
 
-
-
 def isRBT(rbt):
     if rbt.root.black == False:
         return False
@@ -195,7 +192,6 @@ def isRBT(rbt):
         return False
     else:
         return isRBTNode(rbt.root)
-
 
 def isRBTNode(nodeIn):
     if not nodeIn.black:

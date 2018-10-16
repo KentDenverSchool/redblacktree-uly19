@@ -240,6 +240,7 @@ test.put(8,0)
 print(isRBT(test)) #false
 test.root.getRight().black = True
 print(isRBT(test)) #false
+test.root.getRight().black = False
 test.root.black = True
 test.root.getLeft().black = True
 test.root.getRight().getLeft().black = True

@@ -1,5 +1,5 @@
 #Ulysses Atkeson, 10/15/18, Implement Some of a isRBTNode
-
+import math
 class Node:
     def __init__(self, keyIn, valueIn):
         self.key = keyIn
@@ -167,14 +167,39 @@ class Red_Black_Tree:
             return self.__max(nodeIn.getRight())
 
     def __repr__(self):
-        temp = self.toString(self.root)
-        temp = temp[0:len(temp)-2]
-        return "{" + temp + "}"
+        return self.toString(self.root)
 
-    def toString(self, nodeIn):
+    def toString(self, nodeIn): #based on Grant
         if(nodeIn==None):
-            return ""
-        return self.toString(nodeIn.getLeft()) + str(nodeIn.getKey()) + "=" + str(nodeIn.getValue())  + ", " + self.toString(nodeIn.getRight())
+            return "x"
+        left = self.toString(nodeIn.getLeft())
+        right = self.toString(nodeIn.getRight())
+        width = max(len(left.split("\n")[0]), len(right.split("\n")[0]))
+        halfWidth = math.floor(width/2)
+
+        stringOut = halfWidth * " " + "|" +(width-halfWidth-1) * "-" + str(nodeIn.key) + (width-halfWidth-1) * "-" + "|" + halfWidth * " "+"\n"
+        
+        leftArr=left.split('\n')
+        rightArr=right.split("\n")
+
+        for i in range(0,max(len(leftArr),len(rightArr))):
+            if(len(leftArr)>i):
+                smallSideWidth=math.floor((width-len(leftArr[i]))/2)
+                stringOut+=smallSideWidth*" "
+                stringOut+=leftArr[i]
+                stringOut+=(width-len(leftArr[i])-smallSideWidth)*" "
+            else:
+                stringOut = stringOut + " "*(width)
+            stringOut+=(( width + len(str(nodeIn.key)) + width)-width*2)*" "
+            if(len(rightArr)>i):
+                smallSideWidth=math.floor((width-len(rightArr[i]))/2)
+                stringOut+=smallSideWidth*" "
+                stringOut+=rightArr[i]
+                stringOut+=(width-len(rightArr[i])-smallSideWidth)*" "
+            else:
+                stringOut = stringOut + " "*(width)
+            stringOut = stringOut + "\n"
+        return stringOut[:-1]
 
     def blackHeight(self):
         nodeIn = self.root
@@ -203,20 +228,40 @@ def isRBTNode(nodeIn):
         return False
     return True
 
-test = Red_Black_Tree()
-test.put(2,1)
-test.put(1,1)
-test.put(6,1)
-test.put(4,1)
-test.put(7,1)
-test.put(3,1)
-test.put(5,1)
-test.put(8,1)
-print(isRBT(test))
+test = Red_Black_Tree() # from website
+test.put(2,0)
+test.put(1,0)
+test.put(6,0)
+test.put(4,0)
+test.put(7,0)
+test.put(3,0)
+test.put(5,0)
+test.put(8,0)
+print(isRBT(test)) #false
+test.root.getRight().black = True
+print(isRBT(test)) #false
 test.root.black = True
 test.root.getLeft().black = True
 test.root.getRight().getLeft().black = True
 test.root.getRight().getRight().black = True
-print(isRBT(test))
-test.root.getRight().black = True
-print(isRBT(test))
+print(isRBT(test)) #true
+
+test1 = Red_Black_Tree()
+test1.put(10,1)
+test1.put(5,2)
+test1.put(15,3)
+test1.put(4,4)
+test1.put(6,5)
+test1.put(14,6)
+test1.put(16,7)
+print(str(test1))
+print()
+print()
+test1.root=test1.rotateRight(test1.root)
+print(str(test1))
+print()
+print()
+test1.root.setRight(test1.rotateLeft(test1.root.right))
+print(str(test1))
+
+
